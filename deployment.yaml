@@ -1,6 +1,5 @@
 apiVersion: apps/v1
 kind: Deployment
-namespace: chapter5
 metadata:
   name: nginx-test
 spec:
