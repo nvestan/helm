@@ -4,7 +4,7 @@
 SEARCH_DIR=${1:-.}
 
 # Define the target and replacement
-TARGET='\${jenkins_env.fp_image_hash}'
+TARGET='\${jenkins_mashine}'
 REPLACEMENT="pipeline"
 
 # Find and replace all the files
