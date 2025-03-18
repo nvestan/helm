@@ -38,7 +38,7 @@ pipeline {
              sh './helm version'
              sh './helm list'
              sh 'ls -al'
-             sh './helm install nginx nginx/ -n mamba --dry-run''
+             sh './helm install nginx nginx/ -n mamba --dry-run'
         }    
     }
 
