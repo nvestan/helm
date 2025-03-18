@@ -44,9 +44,9 @@ pipeline {
     stage('Run Helm Dry-Run') {
         steps {
             script {
+                    def iferror = false
                     try {
                     def helmResult = ""
-                    def iferror = false
                     helmResult = sh(script: './helm install nginx nginx/ -n mamba --dry-run --debug > helmevent.log 2>&1', returnStdout: true).trim()
                     } catch (Exception e) {
                      iferror = true
