@@ -47,8 +47,8 @@ pipeline {
                     def result = sh(script: './helm install nginx nginx/ -n mamba --dry-run 2>&1', returnStdout: true).trim()
                     if (result.contains("Error:")) {
                         echo "❌ Python script failed!"
-                        currentBuild.result = 'FAILURE'
                         currentBuild.description = "<b>Python Error:</b><br><pre>${result}</pre>"
+                        currentBuild.result = 'FAILURE'
                     } else {
                         echo "✅ Python script ran successfully!"
                         currentBuild.description = "✅ Success! No errors."
