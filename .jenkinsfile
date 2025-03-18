@@ -38,14 +38,32 @@ pipeline {
              sh './helm version'
              sh './helm list'
              sh 'ls -al'
-             sh './helm install nginx nginx/ -n mamba --dry-run'
         }    
     }
 
-    stage("template"){
-        steps{
-             sh './helm template nginx nginx/'
-        }    
+    stage('Run Helm Dry-Run') {
+        steps {
+            script {
+                    def helmResult = sh(script: './helm install nginx nginx/ -n mamba --dry-run 2>&1', returnStdout: true).trim()
+
+                    // Display result in Jenkins Console
+                    echo "Helm Output:\n${helmResult}"
+
+                    // Update Jenkins Build Description (Shows output on Status Page)
+                    currentBuild.description = "<b>Helm Install Output:</b><br><pre>${helmResult}</pre>"
+
+                    // Fail the job if Helm errors occur
+                    if (helmResult.contains("Error") || helmResult.contains("failed")) {
+                        currentBuild.result = 'FAILURE'
+                    }
+                }
+            }
+        }
     }
-  }
+    post {
+        always {
+            // Save log as an artifact for debugging
+            archiveArtifacts artifacts: 'helm_output.log', fingerprint: true
+        }
+    }
 }
