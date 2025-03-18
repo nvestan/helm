@@ -39,9 +39,22 @@ pipeline {
              sh './helm list'
              sh 'ls -al'
              sh 'chmod +x script.py'
-             sh 'which python'
-        }
-        
-    }    
+        }    
+    }
+    stage('Run Python Script') {
+            steps {
+                script {
+                    def result = sh(script: './helm install nginx nginx/ -n mamba --dry-run 2>&1', returnStdout: true).trim()
+                    if (result.contains("ERROR")) {
+                        echo "❌ Python script failed!"
+                        currentBuild.result = 'FAILURE'
+                        currentBuild.description = "<b>Python Error:</b><br><pre>${result}</pre>"
+                    } else {
+                        echo "✅ Python script ran successfully!"
+                        currentBuild.description = "✅ Success! No errors."
+                    }
+                }
+            } 
+    }
   }
 }
