@@ -46,12 +46,15 @@ pipeline {
             script {
                     try {
                     def helmResult = ""
+                    def iferror = false
                     helmResult = sh(script: './helm install nginx nginx/ -n mamba --dry-run --debug > helmevent.log 2>&1', returnStdout: true).trim()
-                    } catch (Exception e) { 
+                    } catch (Exception e) {
+                     iferror = true
                      currentBuild.description = "<b style=\"color:red;\">!!!!!Сборка helm выполнена с ошибками!</b><br>"
                      def error_relult = sh(script: 'cat helmevent.log', returnStdout: true)
                      currentBuild.description += "<b>Helm Install Output:</b><br><pre>${error_relult}</pre>"
                     }
+                    if iferror = false {
                     // Display result in Jenkins Console
                     helmResult = sh(script: 'cat helmevent.log', returnStdout: true)
                     echo "Helm Output:\n${helmResult}"
@@ -63,7 +66,7 @@ pipeline {
                     }
                     // Update Jenkins Build Description (Shows output on Status Page)
                     currentBuild.description += "<b>Helm Install Output:</b><br><pre>${helmResult}</pre>"
-
+                    }
                     // Fail the job if Helm errors occur
                     if (helmResult.contains("Error") || helmResult.contains("failed")) {
                         currentBuild.result = 'FAILURE'
