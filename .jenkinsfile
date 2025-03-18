@@ -45,14 +45,15 @@ pipeline {
         steps {
             script {
                     try {
-                    def helmResult = sh(script: './helm install nginx nginx/ -n mamba --dry-run --debug > helmevent.log 2>&1', returnStdout: true).trim()
+                    def helmResult = ""
+                    helmResult = sh(script: './helm install nginx nginx/ -n mamba --dry-run --debug > helmevent.log 2>&1', returnStdout: true).trim()
                     } catch (Exception e) { 
                      currentBuild.description = "<b style=\"color:red;\">!!!!!Сборка helm выполнена с ошибками!</b><br>"
                      def error_relult = sh(script: 'cat helmevent.log', returnStdout: true)
                      currentBuild.description += "<b>Helm Install Output:</b><br><pre>${error_relult}</pre>"
-                     helmResult = error_relult 
                     }
                     // Display result in Jenkins Console
+                    helmResult = sh(script: 'cat helmevent.log', returnStdout: true)
                     echo "Helm Output:\n${helmResult}"
                     if (helmResult.contains("Error: INSTALLATION FAILED:") || helmResult.contains("failed")) {
                         currentBuild.description += "<b style=\"color:red;\">Сборка helm выполнена с ошибками!</b><br>"
