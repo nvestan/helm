@@ -41,26 +41,21 @@ pipeline {
              sh 'chmod +x script.py'
         }    
     }
-    stage('Run Python Script') {
+stage('Run Python Script') {
             steps {
                 script {
-                    try {
-                        def result = sh(script: './helm install nginx nginx/ -n mamba --dry-run 2>&1', returnStdout: true).trim()
-                         currentBuild.description += "Shit, all ok!"
-                    } catch (e) {
-                        currentBuild.description += "Fuck, its error!"
-                    }
-                    if (result.contains("Error:")) {
+                    def result = sh(script: 'python3 script.py 2>&1', returnStdout: true).trim()
+                    if (result.contains("ERROR")) {
                         echo "❌ Python script failed!"
+                        currentBuild.result = 'FAILURE'
                         currentBuild.description = "<b>Python Error:</b><br><pre>${result}</pre>"
-                      //  currentBuild.result = 'FAILURE'
                     } else {
                         echo "✅ Python script ran successfully!"
                         currentBuild.description = "✅ Success! No errors."
                     }
                 }
-            } 
-    }
+            }
+        }
     stage("template"){
         steps{
              sh './helm template nginx nginx/'
