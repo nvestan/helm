@@ -3,7 +3,7 @@ pipeline {
           kubernetes (kubernetesAgent(name: 'mini'))
   }
     environment {
-        GIT_REPO = 'https://${code}@github.com/nvestan/helm.git'  // Replace with your repo URL
+        GIT_REPO = 'https://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@github.com/nvestan/helm.git'  // Replace with your repo URL
         GIT_BRANCH = 'main'  
     }
   
