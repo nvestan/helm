@@ -44,7 +44,7 @@ pipeline {
     stage('Run Helm Dry-Run') {
         steps {
             script {
-                    def helmResult = sh(script: './helm template nginx nginx/ -n mamba 2>&1', returnStdout: true).trim()
+                    def helmResult = sh(script: './helm install nginx nginx/ -n mamba --dry-run --debug 2>&1', returnStdout: true).trim()
 
                     // Display result in Jenkins Console
                     echo "Helm Output:\n${helmResult}"
