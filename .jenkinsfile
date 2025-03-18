@@ -45,6 +45,7 @@ stage('Run Python Script') {
             steps {
                 script {
                     def result = sh(script: './helm install nginx nginx/ -n mamba --dry-run 2>&1', returnStdout: true).trim()
+                    echo "python script results: \n${result}"
                     if (result.contains("ERROR")) {
                         echo "❌ Python script failed!"
                         currentBuild.result = 'FAILURE'
