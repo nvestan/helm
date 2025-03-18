@@ -60,10 +60,4 @@ pipeline {
             }
         }
     }
-    post {
-        always {
-            // Save log as an artifact for debugging
-            archiveArtifacts artifacts: 'helm_output.log', fingerprint: true
-        }
-    }
 }
