@@ -44,8 +44,11 @@ pipeline {
     stage('Run Helm Dry-Run') {
         steps {
             script {
+                    try {
                     def helmResult = sh(script: './helm install nginx nginx/ -n mamba --dry-run --debug 2>&1', returnStdout: true).trim()
-
+                    } catch (Exception e) { 
+                     currentBuild.description += "<b style=\"color:red;\">Сборка helm выполнена с ошибками!</b><br>"    
+                    } 
                     // Display result in Jenkins Console
                     echo "Helm Output:\n${helmResult}"
                     if (helmResult.contains("Error: INSTALLATION FAILED:") || helmResult.contains("failed")) {
