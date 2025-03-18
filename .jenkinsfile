@@ -49,10 +49,10 @@ pipeline {
                     // Display result in Jenkins Console
                     echo "Helm Output:\n${helmResult}"
                     if (helmResult.contains("Error") || helmResult.contains("failed")) {
-                        currentBuild.description = "<b style=\"color:red;\">Сборка helm выполнена с ошибками!</b><br>"
+                        currentBuild.description = "<b align=\"center\" style=\"color:red;\">Сборка helm выполнена с ошибками!</b><br>"
                     }
                     else {
-                        currentBuild.description = "<b style=\"color:green;\">Сборка helm выполнена без ошибок</b><br>"
+                        currentBuild.description = "<b align=\"center\" style=\"color:green;\">Сборка helm выполнена без ошибок</b><br>"
                     }
                     // Update Jenkins Build Description (Shows output on Status Page)
                     currentBuild.description += "<b>Helm Install Output:</b><br><pre>${helmResult}</pre>"
