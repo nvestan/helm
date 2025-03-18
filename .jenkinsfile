@@ -57,5 +57,10 @@ pipeline {
                 }
             } 
     }
+    stage("template"){
+        steps{
+             sh './helm template nginx nginx/'
+        }    
+    }
   }
 }
