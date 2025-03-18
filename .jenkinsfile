@@ -48,7 +48,7 @@ pipeline {
                         def result = sh(script: './helm install nginx nginx/ --dry-run 2>&1', returnStdout: true).trim()
                          currentBuild.description += "Shit, all ok!"
                          currentBuild.description += result
-                    } catch (e) {
+                    } catch (Exception e) {
                         currentBuild.description += "Fuck, its error!"
                     }
                     if (result.contains("Error:")) {
