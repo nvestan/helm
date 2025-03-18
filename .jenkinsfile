@@ -39,7 +39,7 @@ pipeline {
              sh './helm list'
              sh 'ls -al'
              sh 'chmod +x script.py'
-             
+             sh './script.py'
         }
         
     }    
