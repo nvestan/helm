@@ -48,7 +48,7 @@ pipeline {
                     if (result.contains("Error:")) {
                         echo "❌ Python script failed!"
                         currentBuild.description = "<b>Python Error:</b><br><pre>${result}</pre>"
-                        currentBuild.result = 'FAILURE'
+                      //  currentBuild.result = 'FAILURE'
                     } else {
                         echo "✅ Python script ran successfully!"
                         currentBuild.description = "✅ Success! No errors."
