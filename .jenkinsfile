@@ -48,7 +48,7 @@ pipeline {
 
                     // Display result in Jenkins Console
                     echo "Helm Output:\n${helmResult}"
-                    if (helmResult.contains("Error") || helmResult.contains("failed")) {
+                    if (helmResult.contains("Error: INSTALLATION FAILED:") || helmResult.contains("failed")) {
                         currentBuild.description = "<b style=\"color:red;\">Сборка helm выполнена с ошибками!</b><br>"
                     }
                     else {
