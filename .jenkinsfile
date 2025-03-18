@@ -47,7 +47,8 @@ pipeline {
                     try {
                     def helmResult = sh(script: './helm install nginx nginx/ -n mamba --dry-run --debug 2>&1', returnStdout: true).trim()
                     } catch (Exception e) { 
-                     currentBuild.description = "<b style=\"color:red;\">Сборка helm выполнена с ошибками!</b><br>"    
+                     currentBuild.description = "<b style=\"color:red;\">Сборка helm выполнена с ошибками!</b><br>"
+                     currentBuild.description += "<b>Helm Install Output:</b><br><pre>${helmResult}</pre>"
                     } 
                     // Display result in Jenkins Console
                     echo "Helm Output:\n${helmResult}"
