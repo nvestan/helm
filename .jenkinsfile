@@ -44,7 +44,12 @@ pipeline {
     stage('Run Python Script') {
             steps {
                 script {
-                    def result = sh(script: './helm install nginx nginx/ -n mamba --dry-run 2>&1', returnStdout: true).trim()
+                    try {
+                        def result = sh(script: './helm install nginx nginx/ -n mamba --dry-run 2>&1', returnStdout: true).trim()
+                         currentBuild.description += "Shit, all ok!"
+                    } catch (e) {
+                        currentBuild.description += "Fuck, its error!"
+                    }
                     if (result.contains("Error:")) {
                         echo "❌ Python script failed!"
                         currentBuild.description = "<b>Python Error:</b><br><pre>${result}</pre>"
