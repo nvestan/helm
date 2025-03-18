@@ -54,7 +54,7 @@ pipeline {
                      def error_relult = sh(script: 'cat helmevent.log', returnStdout: true)
                      currentBuild.description += "<b>Helm Install Output:</b><br><pre>${error_relult}</pre>"
                     }
-                    if (iferror = false) {
+                    if (iferror == false) {
                     // Display result in Jenkins Console
                     helmResult = sh(script: 'cat helmevent.log', returnStdout: true)
                     echo "Helm Output:\n${helmResult}"
